@@ -14,30 +14,61 @@ class HabitDetailsScreen extends StatefulWidget {
 }
 
 class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
-//  final GlobalKey<AnimatedCircularChartState> _chartKey =
-//      new GlobalKey<AnimatedCircularChartState>();
+  final GlobalKey<AnimatedCircularChartState> _chartKey =
+      new GlobalKey<AnimatedCircularChartState>();
+  int _done = 0;
+  int _total = 0;
+  int _percent = 0;
   int _year = 2019;
-  List<CircularStackEntry> data;
+  List<CircularStackEntry> _data = List();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      data = <CircularStackEntry>[
-        new CircularStackEntry(
+      if (widget.habitModel.repeatGoal[1] == 'Everyday') {
+        if (DateTime.now().month == 1 ||
+            DateTime.now().month == 3 ||
+            DateTime.now().month == 5 ||
+            DateTime.now().month == 7 ||
+            DateTime.now().month == 8 ||
+            DateTime.now().month == 10 ||
+            DateTime.now().month == 12) {
+          _total = 31;
+        } else if (DateTime.now().month == 2) {
+          _total = 28;
+        } else {
+          _total = 30;
+        }
+      } else {
+        _total = int.parse(widget.habitModel.repeatGoal[0].toString());
+      }
+      widget.habitModel.habitDetails.forEach((f) {
+        if (f['done'] == true) _done++;
+      });
+      _percent = ((_done / _total) * 100).truncate();
+      _data = <CircularStackEntry>[
+        CircularStackEntry(
           <CircularSegmentEntry>[
-            new CircularSegmentEntry(500.0, Theme.of(context).primaryColor,
-                rankKey: 'Q1'),
-//        new CircularSegmentEntry(1000.0, Colors.green[200], rankKey: 'Q2'),
-//        new CircularSegmentEntry(2000.0, Colors.blue[200], rankKey: 'Q3'),
-//        new CircularSegmentEntry(1000.0, Colors.yellow[200], rankKey: 'Q4'),
+            CircularSegmentEntry(
+              _percent.truncateToDouble(),
+              Theme.of(context).primaryColor,
+              rankKey: 'completed',
+            ),
+            CircularSegmentEntry(
+              100.0 - _percent.truncateToDouble(),
+              Colors.grey[300],
+              rankKey: 'remaining',
+            ),
           ],
-          rankKey: 'Quarterly Profits',
+          rankKey: 'progress',
         ),
       ];
 
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
+      _chartKey.currentState.updateData(_data);
+//      _chartKey.currentState.setState(() {});
       if (mounted) setState(() {});
     });
   }
@@ -47,7 +78,6 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
     super.dispose();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Color(widget.habitModel.color)));
-//    if (mounted) setState(() {});
   }
 
   @override
@@ -98,47 +128,25 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
                     alignment: Alignment.center,
                     children: <Widget>[
                       AnimatedCircularChart(
-//                    key: _chartKey,
+                        key: _chartKey,
                         size: const Size(250.0, 250.0),
                         holeRadius: 100.0,
-                        initialChartData: <CircularStackEntry>[
-                          CircularStackEntry(
-                            <CircularSegmentEntry>[
-                              CircularSegmentEntry(
-                                30.0,
-                                Theme.of(context).primaryColor,
-                                rankKey: 'completed',
-                              ),
-                              CircularSegmentEntry(
-                                70.0,
-                                Colors.grey[300],
-                                rankKey: 'remaining',
-                              ),
-                            ],
-                            rankKey: 'progress',
-                          ),
-                        ],
+                        initialChartData: _data,
                         edgeStyle: SegmentEdgeStyle.flat,
                         chartType: CircularChartType.Radial,
                         percentageValues: true,
-//                    holeLabel: '0% \n \n 0 of 0 completed',
-//                    labelStyle: new TextStyle(
-//                      color: Colors.blueGrey[600],
-//                      fontWeight: FontWeight.bold,
-//                      fontSize: 24.0,
-//                    ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            '0%',
+                            '$_percent%',
                             style: Theme.of(context).textTheme.title,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 24.0),
                             child: Text(
-                              '0 of 0 \ncompleted',
+                              '$_done of $_total \ncompleted',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
