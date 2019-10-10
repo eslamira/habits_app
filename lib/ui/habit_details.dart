@@ -14,18 +14,89 @@ class HabitDetailsScreen extends StatefulWidget {
 }
 
 class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
+  final _key = GlobalKey();
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
   int _done = 0;
   int _total = 0;
   int _percent = 0;
-  int _year = 2019;
+  int _year = DateTime.now().year;
+  double _lineHeight = 0.0;
   List<CircularStackEntry> _data = List();
+  List<int> _monthlyDone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final RenderBox box = _key.currentContext.findRenderObject();
+      _lineHeight = box.size.height;
+
+      widget.habitModel.habitDetails.forEach((f) {
+        switch (DateTime.fromMillisecondsSinceEpoch(f['date']).month) {
+          case 1:
+            {
+              if (f['done'] == true) _monthlyDone[0]++;
+            }
+            break;
+          case 2:
+            {
+              if (f['done'] == true) _monthlyDone[1]++;
+            }
+            break;
+          case 3:
+            {
+              if (f['done'] == true) _monthlyDone[2]++;
+            }
+            break;
+          case 4:
+            {
+              if (f['done'] == true) _monthlyDone[3]++;
+            }
+            break;
+          case 5:
+            {
+              if (f['done'] == true) _monthlyDone[4]++;
+            }
+            break;
+          case 6:
+            {
+              if (f['done'] == true) _monthlyDone[5]++;
+            }
+            break;
+          case 7:
+            {
+              if (f['done'] == true) _monthlyDone[6]++;
+            }
+            break;
+          case 8:
+            {
+              if (f['done'] == true) _monthlyDone[7]++;
+            }
+            break;
+          case 9:
+            {
+              if (f['done'] == true) _monthlyDone[8]++;
+            }
+            break;
+          case 10:
+            {
+              if (f['done'] == true) _monthlyDone[9]++;
+            }
+            break;
+          case 11:
+            {
+              if (f['done'] == true) _monthlyDone[10]++;
+            }
+            break;
+          case 12:
+            {
+              if (f['done'] == true) _monthlyDone[11]++;
+            }
+            break;
+        }
+      });
+
       if (widget.habitModel.repeatGoal[1] == 'Everyday') {
         if (DateTime.now().month == 1 ||
             DateTime.now().month == 3 ||
@@ -226,12 +297,65 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
                       ),
                     ],
                   ),
+                  Expanded(
+                    child: Container(
+                      key: _key,
+                      margin: EdgeInsets.only(top: 32.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(child: _lineChart('J', 0)),
+                          Expanded(child: _lineChart('F', 1)),
+                          Expanded(child: _lineChart('M', 2)),
+                          Expanded(child: _lineChart('A', 3)),
+                          Expanded(child: _lineChart('M', 4)),
+                          Expanded(child: _lineChart('J', 5)),
+                          Expanded(child: _lineChart('J', 6)),
+                          Expanded(child: _lineChart('A', 7)),
+                          Expanded(child: _lineChart('S', 8)),
+                          Expanded(child: _lineChart('O', 9)),
+                          Expanded(child: _lineChart('N', 10)),
+                          Expanded(child: _lineChart('D', 11)),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _lineChart(String char, int index) {
+    double height = 0.0;
+    height = (_monthlyDone[index] / _total) * _lineHeight;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          height: height ?? 0.0,
+          width: 16.0,
+          decoration: BoxDecoration(
+            color: Color(widget.habitModel.color),
+            borderRadius: BorderRadius.all(
+              Radius.circular(28.0),
+            ),
+          ),
+        ),
+        SizedBox(height: 4.0),
+        Expanded(
+          flex: 0,
+          child: Text(
+            char,
+            style: Theme.of(context).textTheme.subtitle.copyWith(
+                  color: Colors.grey,
+                  fontSize: 14.0,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }
