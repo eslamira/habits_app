@@ -66,7 +66,7 @@ class HabitCard extends StatelessWidget {
               ],
             ),
           ),
-          ProgressWidget(),
+          ProgressWidget(habitModel),
         ],
       ),
     );

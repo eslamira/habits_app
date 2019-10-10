@@ -31,8 +31,7 @@ dependencies:
   font_awesome_flutter:
   path:
   path_provider:
-  flutter_picker:
-    git: git://github.com/yangyxd/flutter_picker.git
+  flutter_picker: ^1.0.15
   tiny_widgets:
     git: https://github.com/TinyProgrammers/tiny_widgets.git
 

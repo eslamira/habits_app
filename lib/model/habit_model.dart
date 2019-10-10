@@ -2,7 +2,7 @@ class HabitModel {
   String id;
   String name;
   int color;
-  List repeatGoal;
+  List repeatGoal = List();
   List habitDetails = List();
 
   HabitModel({

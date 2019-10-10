@@ -29,8 +29,9 @@ class _ManageHabitsState extends State<ManageHabits> {
   @override
   void dispose() {
     super.dispose();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(widget.habits[0].color)));
+    if (widget.habits.isNotEmpty)
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(widget.habits[0].color)));
 //    if (mounted) setState(() {});
   }
 
