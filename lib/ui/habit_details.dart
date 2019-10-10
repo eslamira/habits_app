@@ -23,7 +23,8 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
   int _year = DateTime.now().year;
   double _lineHeight = 0.0;
   List<CircularStackEntry> _data = List();
-  List<int> _monthlyDone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  Map<int, List<int>> _yearlyMonthlyDone = Map<int, List<int>>();
+  bool _loading = true;
 
   @override
   void initState() {
@@ -33,65 +34,186 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
       _lineHeight = box.size.height;
 
       widget.habitModel.habitDetails.forEach((f) {
+        if (f['done']) _done++;
         switch (DateTime.fromMillisecondsSinceEpoch(f['date']).month) {
           case 1:
             {
-              if (f['done'] == true) _monthlyDone[0]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[0]++;
+                  return list;
+                });
+              }
             }
             break;
           case 2:
             {
-              if (f['done'] == true) _monthlyDone[1]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[1]++;
+                  return list;
+                });
+              }
             }
             break;
           case 3:
             {
-              if (f['done'] == true) _monthlyDone[2]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[2]++;
+                  return list;
+                });
+              }
             }
             break;
           case 4:
             {
-              if (f['done'] == true) _monthlyDone[3]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[3]++;
+                  return list;
+                });
+              }
             }
             break;
           case 5:
             {
-              if (f['done'] == true) _monthlyDone[4]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[4]++;
+                  return list;
+                });
+              }
             }
             break;
           case 6:
             {
-              if (f['done'] == true) _monthlyDone[5]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[5]++;
+                  return list;
+                });
+              }
             }
             break;
           case 7:
             {
-              if (f['done'] == true) _monthlyDone[6]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[6]++;
+                  return list;
+                });
+              }
             }
             break;
           case 8:
             {
-              if (f['done'] == true) _monthlyDone[7]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[7]++;
+                  return list;
+                });
+              }
             }
             break;
           case 9:
             {
-              if (f['done'] == true) _monthlyDone[8]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[8]++;
+                  return list;
+                });
+              }
             }
             break;
           case 10:
             {
-              if (f['done'] == true) _monthlyDone[9]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[9]++;
+                  return list;
+                });
+              }
             }
             break;
           case 11:
             {
-              if (f['done'] == true) _monthlyDone[10]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[10]++;
+                  return list;
+                });
+              }
             }
             break;
           case 12:
             {
-              if (f['done'] == true) _monthlyDone[11]++;
+              if (f['done']) {
+                _yearlyMonthlyDone.putIfAbsent(
+                    DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                    () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                _yearlyMonthlyDone
+                    .update(DateTime.fromMillisecondsSinceEpoch(f['date']).year,
+                        (list) {
+                  list[11]++;
+                  return list;
+                });
+              }
             }
             break;
         }
@@ -114,9 +236,6 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
       } else {
         _total = int.parse(widget.habitModel.repeatGoal[0].toString());
       }
-      widget.habitModel.habitDetails.forEach((f) {
-        if (f['done'] == true) _done++;
-      });
       _percent = ((_done / _total) * 100).truncate();
       _data = <CircularStackEntry>[
         CircularStackEntry(
@@ -139,7 +258,7 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
       _chartKey.currentState.updateData(_data);
-//      _chartKey.currentState.setState(() {});
+      _loading = false;
       if (mounted) setState(() {});
     });
   }
@@ -301,22 +420,24 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
                     child: Container(
                       key: _key,
                       margin: EdgeInsets.only(top: 32.0),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(child: _lineChart('J', 0)),
-                          Expanded(child: _lineChart('F', 1)),
-                          Expanded(child: _lineChart('M', 2)),
-                          Expanded(child: _lineChart('A', 3)),
-                          Expanded(child: _lineChart('M', 4)),
-                          Expanded(child: _lineChart('J', 5)),
-                          Expanded(child: _lineChart('J', 6)),
-                          Expanded(child: _lineChart('A', 7)),
-                          Expanded(child: _lineChart('S', 8)),
-                          Expanded(child: _lineChart('O', 9)),
-                          Expanded(child: _lineChart('N', 10)),
-                          Expanded(child: _lineChart('D', 11)),
-                        ],
-                      ),
+                      child: _loading
+                          ? Container()
+                          : Row(
+                              children: <Widget>[
+                                Expanded(child: _lineChart('J', 0)),
+                                Expanded(child: _lineChart('F', 1)),
+                                Expanded(child: _lineChart('M', 2)),
+                                Expanded(child: _lineChart('A', 3)),
+                                Expanded(child: _lineChart('M', 4)),
+                                Expanded(child: _lineChart('J', 5)),
+                                Expanded(child: _lineChart('J', 6)),
+                                Expanded(child: _lineChart('A', 7)),
+                                Expanded(child: _lineChart('S', 8)),
+                                Expanded(child: _lineChart('O', 9)),
+                                Expanded(child: _lineChart('N', 10)),
+                                Expanded(child: _lineChart('D', 11)),
+                              ],
+                            ),
                     ),
                   ),
                 ],
@@ -330,7 +451,9 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
 
   Widget _lineChart(String char, int index) {
     double height = 0.0;
-    height = (_monthlyDone[index] / _total) * _lineHeight;
+    if (_yearlyMonthlyDone[_year] != null) {
+      height = ((_yearlyMonthlyDone[_year][index] ?? 0) / _total) * _lineHeight;
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
