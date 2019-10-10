@@ -20,9 +20,11 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
   int _done = 0;
   int _total = 0;
   int _percent = 0;
+  int _avgPercent = 0;
   int _year = DateTime.now().year;
   double _lineHeight = 0.0;
   List<CircularStackEntry> _data = List();
+  List<int> _monthlyPercent = List<int>();
   Map<int, List<int>> _yearlyMonthlyDone = Map<int, List<int>>();
   bool _loading = true;
 
@@ -258,6 +260,7 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
       _chartKey.currentState.updateData(_data);
+      _computeAvg();
       _loading = false;
       if (mounted) setState(() {});
     });
@@ -268,6 +271,17 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
     super.dispose();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Color(widget.habitModel.color)));
+  }
+
+  _computeAvg() {
+    _yearlyMonthlyDone[_year].forEach((v) {
+      if (v > 0) {
+        _monthlyPercent.add(((v / _total) * 100).truncate());
+      }
+    });
+    int sum = 0;
+    _monthlyPercent.forEach((v) => sum += v);
+    _avgPercent = (sum / _monthlyPercent.length).truncate();
   }
 
   @override
@@ -422,20 +436,53 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
                       margin: EdgeInsets.only(top: 32.0),
                       child: _loading
                           ? Container()
-                          : Row(
+                          : Stack(
                               children: <Widget>[
-                                Expanded(child: _lineChart('J', 0)),
-                                Expanded(child: _lineChart('F', 1)),
-                                Expanded(child: _lineChart('M', 2)),
-                                Expanded(child: _lineChart('A', 3)),
-                                Expanded(child: _lineChart('M', 4)),
-                                Expanded(child: _lineChart('J', 5)),
-                                Expanded(child: _lineChart('J', 6)),
-                                Expanded(child: _lineChart('A', 7)),
-                                Expanded(child: _lineChart('S', 8)),
-                                Expanded(child: _lineChart('O', 9)),
-                                Expanded(child: _lineChart('N', 10)),
-                                Expanded(child: _lineChart('D', 11)),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(child: _lineChart('J', 0)),
+                                    Expanded(child: _lineChart('F', 1)),
+                                    Expanded(child: _lineChart('M', 2)),
+                                    Expanded(child: _lineChart('A', 3)),
+                                    Expanded(child: _lineChart('M', 4)),
+                                    Expanded(child: _lineChart('J', 5)),
+                                    Expanded(child: _lineChart('J', 6)),
+                                    Expanded(child: _lineChart('A', 7)),
+                                    Expanded(child: _lineChart('S', 8)),
+                                    Expanded(child: _lineChart('O', 9)),
+                                    Expanded(child: _lineChart('N', 10)),
+                                    Expanded(child: _lineChart('D', 11)),
+                                  ],
+                                ),
+                                Positioned(
+                                  bottom:
+                                      ((_avgPercent / 100) * _lineHeight) + 23,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 48.0),
+                                        child: Text(
+                                          'Avg. $_avgPercent%',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle
+                                              .copyWith(
+                                                color: Colors.grey,
+                                                fontSize: 16.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 1.0,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        color: Color(widget.habitModel.color),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                     ),
@@ -452,8 +499,9 @@ class _HabitDetailsScreenState extends State<HabitDetailsScreen> {
   Widget _lineChart(String char, int index) {
     double height = 0.0;
     if (_yearlyMonthlyDone[_year] != null) {
-      height = ((_yearlyMonthlyDone[_year][index] ?? 0) / _total) * _lineHeight;
+      height = ((_yearlyMonthlyDone[_year][index]) / _total) * _lineHeight;
     }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
