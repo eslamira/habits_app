@@ -1,16 +1,79 @@
-# habits_app
+# Habits App
 
-Habits App
+#### Information about this project:
 
-## Getting Started
+**Habits** - “(##Missing)”
 
-This project is a starting point for a Flutter application.
+**Application Category**:  (##Missing).
 
-A few resources to get you started if this is your first Flutter project:
+**Support Email**: [thetinyprogrammers@gmail.com](mailto:thetinyprogrammers@gmail.com).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### Developers worked on this:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**eslamira** [Contact](https://api.whatsapp.com/send?phone=0201144753259) / [Contact](http://tinyprogrammers.ga).
+
+#### Application runs on:
+
+Android: api16+ (Kitkat 4.4+).
+
+IOS: 9.0+.
+
+Fuchsia: none.
+
+Desktop: none.
+
+Web: none.
+
+#### Developing environment:
+
+Developed with Flutter on Dev Branch (1.10.6).
+
+Dart SDK Dev Branch (2.6.0+).
+
+supporting AndroidX Libraries (merged to androidX).
+
+#### Release Certificates Fingerprints:
+
+MD5: (##Missing).
+
+SHA1: (##Missing).
+
+SHA256: (##Missing).
+
+#### Upload Certificates Fingerprints:
+
+MD5: (##Missing).
+
+SHA1: (##Missing).
+
+SHA256: (##Missing).
+
+#### AdMob:
+
+appId: (##Missing).
+
+Interstitial : (##Missing).
+
+Banner : (##Missing).
+
+Reward : (##Missing).
+
+#### Links:
+
+[App Icon](./android/app/src/main/web_hi_res_512.png).
+
+[Privacy Policy] (##Missing).
+
+[Internal Test Play Store Link] (##Missing).
+
+[Play Store Link (Production)] (##Missing).
+
+[Play Store Console] (##Missing).
+
+[App Store Test Flight] (##Missing).
+
+[App Store Link (Production)] (##Missing).
+
+#### See Also
+
+[Tiny Programmers Website](https://tinyprogrammers.ga).
